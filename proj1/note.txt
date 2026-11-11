@@ -1,0 +1,20 @@
+proj1文件说明
+── 源码 ──────────────────────────────────
+tree.h / tree.c    语法树节点定义、创建与先序遍历打印
+lexical.l          Flex 词法分析规则文件
+syntax.y           Bison 语法分析规则文件
+main.c             主程序，驱动 yyparse() 并控制输出
+Makefile           编译脚本
+── 测试用例 ───────────────────────────────
+test1_basic.cmm         合法
+test2_control.cmm       合法
+test3_struct_array.cmm  合法
+test4_expr.cmm          合法
+test5_err_syntax.cmm    B 类语法错误（
+test6_err_lexical.cmm   A 类词法错误
+test7_err_comment.cmm   A 类：未闭合块注释
+── 编译与运行 ─────────────────────────────────────
+$ make                  # 编译，生成 parser
+$ ./parser test1_basic.cmm   # 运行单个测试
+$ make test             # 批量运行全部 test*.cmm
+$ make clean            # 清理构建产物

@@ -1,0 +1,47 @@
+proj2：语义分析 — 目录说明
+
+编译：make
+运行：./parser <source.cmm>
+批量测试：make test
+
+核心源码
+  syntax.y         Bison 语法分析器
+  lexical.l        Flex 词法分析器
+  semantic.h       语义分析头文件
+  semantic.c       语义分析主实现
+  tree.h / tree.c  语法树节点定义与构建
+  main.c           主入口
+  Makefile         编译脚本
+
+测试用例
+  --- 必做 17 类错误 ---
+  test1_undef_var.cmm       type 1：变量未定义
+  test2_undef_func.cmm      type 2：函数未定义
+  test3_var_redef.cmm       type 3：变量重复定义
+  test4_func_redef.cmm      type 4：函数重复定义
+  test5_assign_type.cmm     type 5：赋值类型不匹配
+  test6_lval.cmm            type 6：赋值左侧无左值
+  test7_operand.cmm         type 7：操作数类型不匹配
+  test8_return.cmm          type 8：return 类型不符
+  test9_arg_mismatch.cmm    type 9：函数调用参数不匹配
+  test10_not_array.cmm      type 10：非数组用 []
+  test11_not_func.cmm       type 11：非函数用 ()
+  test12_bad_index.cmm      type 12：下标非整型
+  test13_not_struct.cmm     type 13：非结构体用 .
+  test14_bad_field.cmm      type 14：访问不存在域
+  test15_field_redef.cmm    type 15：域名重复
+  test16_struct_redef.cmm   type 16：结构体名重复
+  test17_undef_struct.cmm   type 17：未定义结构体
+
+  --- 选做 3.1：函数声明 ---
+  test_31_ok_decl.cmm         正确（声明后定义一致）
+  test_31_type19_18.cmm       错误（type 18 声明无定义 + type 19 声明不一致）
+
+  --- 选做 3.2：嵌套作用域 ---
+  test_32_nested.cmm          正确（不同函数同名变量不冲突）
+  test_32_redef.cmm           错误（同作用域重定义 → type 3）
+
+  --- 选做 3.3：结构等价 ---
+  test_33_equiv_ok.cmm        正确（结构等价，赋值合法）
+  test_33_equiv_fail.cmm      错误（结构不等价 → type 5）
+

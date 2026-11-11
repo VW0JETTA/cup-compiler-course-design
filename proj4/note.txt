@@ -1,0 +1,27 @@
+proj4目标代码生成 文件说明
+
+源程序
+  main.c        编译流程主程序
+  syntax.y      语法分析
+  lexical.l     词法分析
+  ast.h / ast.c 抽象语法树（AST）数据结构与构造
+  ir.h / ir.c   中间代码（IR）生成、输出与窥孔优化
+  codegen.h / codegen.c
+                目标代码生成器：指令选择 + 局部寄存器分配（教材图5.10/5.11）
+                + 活跃变量分析（教材图5.12）+ 栈管理与过程调用序列（教材5.2.9）
+
+构建
+  Makefile      make 编译生成可执行文件 cc
+                make clean 清理中间文件
+
+测试用例
+  test1.cmm     Fibonacci数列
+  test2.cmm     递归阶乘
+  test3.cmm     多参数函数调用
+  test4.cmm     一维数组读写
+
+运行方式
+  make                          # 编译
+  ./cc test1.cmm test1.s        # 生成MIPS32汇编
+   #QtSPIM图形界面打开.s文件运行
+

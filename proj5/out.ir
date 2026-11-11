@@ -1,0 +1,9 @@
+FUNCTION main :
+READ v1
+READ v2
+LABEL label2 :
+t6 := v1 + v2
+t9 := t6
+WRITE t6
+WRITE t9
+RETURN #0

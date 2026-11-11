@@ -1,0 +1,7 @@
+# 构建产物与生成文件
+*.o
+parser
+cc
+lex.yy.c
+syntax.tab.c
+syntax.tab.h

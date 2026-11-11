@@ -1,0 +1,47 @@
+/* ============================================================
+ * test3_struct_array.cmm — 合法程序：结构体与数组
+ * 覆盖：结构体定义、用已定义结构体声明变量(STRUCT Tag)、
+ *       嵌套结构体成员、多维数组定义、数组形参、
+ *       数组访问、链式结构体成员访问(DOT)
+ * 预期：无错误，输出完整语法树
+ * ============================================================ */
+struct Point {
+    int x;
+    int y;
+};
+
+struct Rect {
+    struct Point lt;          /* 成员为已定义结构体类型 */
+    struct Point rb;
+};
+
+int area(int m[10][10], int rows, int cols)
+{
+    int i;
+    int j;
+    int total;
+    total = 0;
+    i = 0;
+    while (i < rows) {
+        j = 0;
+        while (j < cols) {
+            total = total + m[i][j];
+            j = j + 1;
+        }
+        i = i + 1;
+    }
+    return total;
+}
+
+int main()
+{
+    struct Point p;
+    struct Rect r;
+    int grid[10][10];
+    p.x = 1;
+    p.y = 2;
+    r.lt = p;
+    r.lt.x = 5;               /* 链式成员访问 (r.lt).x */
+    grid[0][0] = 7;
+    return area(grid, 10, 10);
+}

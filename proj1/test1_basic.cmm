@@ -1,0 +1,26 @@
+/* ============================================================
+ * test1_basic.cmm — 合法程序：基础语法
+ * 覆盖：全局变量定义(多变量)、函数定义(带参/返回)、
+ *       局部变量定义(含初始化)、赋值语句、return、四则运算
+ * 预期：无错误，输出完整语法树
+ * ============================================================ */
+int g1, g2;
+float pi;
+
+int square(int x)
+{
+    int result;
+    result = x * x;
+    return result;
+}
+
+int main()
+{
+    int a, b, c;
+    int sum = 0;          /* 局部变量初始化：Dec -> VarDec ASSIGNOP Exp */
+    a = 3;
+    b = 4;
+    c = a + b - 1;
+    sum = square(c);
+    return sum;
+}

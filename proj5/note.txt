@@ -1,0 +1,40 @@
+proj5中间代码优化
+
+源码文件
+  main.c          - 驱动程序，读取IR文件→优化→输出
+  ir_opt.h        - 数据结构定义（Operand, InterCode, Program等）
+  ir_reader.c     - IR文本文件解析器
+  ir_writer.c     - IR文本输出器
+  opt_passes.c    - 全部优化Pass（基于CFG+数据流分析的全局优化）
+
+优化实现（opt_passes.c）
+  CFG框架          - 基本块划分、前驱/后继、支配关系(dominators)
+  全局常量传播      - UNDEF/常量/NAC 格上的前向数据流分析
+  全局公共子表达式  - 可用表达式(值-持有者)前向must分析，含跨块CSE
+  全局无用代码消除  - 活跃变量后向分析(变量在函数出口视为dead)
+  循环不变代码外提  - 基于支配关系，将不变式提到循环preheader
+  归纳变量强度削减  - 将循环内 c*i 乘法转为加/减法
+  常量折叠/代数化简/复制传播/控制流化简 为辅助Pass
+  Makefile        - 编译脚本（make编译，make clean清理）
+
+教材样例
+  sample1_cse.ir  - 样例1输入：局部公共子表达式消除
+  sample2_dce.ir  - 样例2输入：无用代码消除
+  sample3_cp.ir   - 样例3输入：常量传播与折叠
+  sample4_gcse.ir - 样例4输入：全局CSE（选做）
+  sample5_licm.ir - 样例5输入：循环不变代码外提（选做）
+  sample6_sr.ir   - 样例6输入：归纳变量强度削减（选做）
+  s1.ir ~ s6.ir   - 对应优化后的输出结果
+
+测试文件
+  demo_big.ir     - 组合优化演示（17行→9行，减少47%）
+
+使用方式
+  make                          # 编译生成 ./cc
+  ./cc sample3_cp.ir output.ir  # 优化单个IR文件
+
+正确性
+  所有优化基于数据流分析，保证优化前后程序语义(WRITE输出与RETURN值)一致。
+  注意：样例程序均为 RETURN #0 且无 WRITE，所有变量在出口处均为死变量，
+  故全局无用代码消除会将其大幅精简（这是正确且更高效的结果）；对含输出的
+  真实程序，各项优化(CSE/常量传播/外提/强度削减)会正常体现。

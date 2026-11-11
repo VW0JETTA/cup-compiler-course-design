@@ -1,0 +1,7 @@
+FUNCTION main :
+READ v1
+READ v2
+t6 := v1 + v2
+WRITE t6
+WRITE t6
+RETURN #0

@@ -1,0 +1,28 @@
+proj3生成中间代码 — 目录说明
+
+源码
+  Makefile    构建脚本
+  lexical.l   Flex 词法规则
+  syntax.y    Bison 语法规则
+  ast.h/.c    多叉树抽象语法树数据结构
+  ir.h/.c     符号表、类型系统、中间代码翻译与输出
+  main.c      入口
+构建与运行
+  make                 编译生成 cc
+  ./cc 输入.cmm 输出.ir 翻译为中间代码
+  ./cc 输入.cmm         中间代码打印到屏幕
+
+已生成的中间代码（教材四个样例）
+  out1_sign.ir         必做样例1：符号函数
+  out2_factorial.ir    必做样例2：阶乘
+  out3_struct.ir       选做样例1：结构体传参
+  out4_multidim.ir     选做样例2：高维数组 + 数组传参
+
+测试用例
+    test1.cmm          必做样例1 源码
+    test2.cmm          必做样例2 源码
+    opt1_struct.cmm    选做样例1 源码
+    opt2_array.cmm     选做样例2 源码
+虚拟机验证
+  cd ../irsim && python3.8 irsim.pyc
+  （File → Open 打开上面的 .ir 文件，F5 运行）
